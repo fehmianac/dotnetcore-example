@@ -1,10 +1,8 @@
 # dotnet 3.1 Example
 
-dotnet 3.1 ile geliştirilmiş ve dockerize edilmiş örnek uygulamadır.
+dotnet 3.1 ile geliştirilmiş ve dockerize edilmiş örnek uygulamadır. Uygulamanın ayağa kalkabilemesi için **ASPNETCORE_ENVIRONMENT** environment parametresi ile çalıştırılmalıdır.
 
 Uygulamanın 3 adet rest api route'u vardır.
-
-Aşağıdaki komutlar çalıştırıldıktan sonra bu [link](http://localhost:8081/swagger/index.html) ile ulaşabilirsiniz.
 
   - **/api/v{version}/Example/users** -> in memory den user listesi getirmek için kullanılır.
   
@@ -26,3 +24,6 @@ docker build -t dotnetcore .
 
 docker run -e ASPNETCORE_ENVIRONMENT=Production -p 8081:80 dotnetcore:latest
 ```
+
+Yukarıdaki komutlar çalıştırıldıktan sonra bu [link](http://localhost:8081/swagger/index.html) ile ulaşabilirsiniz.
+
