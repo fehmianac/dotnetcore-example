@@ -20,9 +20,9 @@ dotnet test
 ## Docker Komutları
 
 ```bash
-docker build -t dotnetcore .
+docker build -t dotnetcore-example .
 
-docker run -e ASPNETCORE_ENVIRONMENT=Production -p 8081:80 dotnetcore:latest
+docker run -e ASPNETCORE_ENVIRONMENT=Production -p 8081:80 dotnetcore-example:latest
 ```
 
 Yukarıdaki komutlar çalıştırıldıktan sonra bu [link](http://localhost:8081/swagger/index.html) ile ulaşabilirsiniz.
