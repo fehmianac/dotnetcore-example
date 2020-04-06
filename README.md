@@ -1,6 +1,7 @@
 # dotnet 3.1 Example
 
-dotnet 3.1 ile geliştirilmiş ve dockerize edilmiş örnek uygulamadır. Uygulamanın ayağa kalkabilemesi için **ASPNETCORE_ENVIRONMENT** environment parametresi ile çalıştırılmalıdır.
+dotnet 3.1 ile geliştirilmiş ve dockerize edilmiş örnek uygulamadır. Uygulamanın ayağa kalkabilemesi için **ASPNETCORE_ENVIRONMENT** environment parametresi ile çalıştırılmalıdır. Uygulanabilecek değerler **Development**,**Production**
+
 
 Uygulamanın 3 adet rest api route'u vardır.
 
