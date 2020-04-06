@@ -12,7 +12,7 @@ Uygulamanın 3 adet rest api route'u vardır.
   - **/api/v{version}/Example/users-with-cache** -> in memory den user listesi getirip redis'e yazdığını gözlemlemek için kullanılır. Bu örneğim çalışması için appsettings.*.json içerisine redis bilgileri yazılmalıdır.
 
 Uygulamanın sağlıklı çalışığ çalışmadığını öğrenmek için **/health** route'unun http_status_code **200** dönmesi gerekmektedir.
-
+Dökümantasyon için **/swagger**
 ## Unit Test Komutu
 
 ```bash
