@@ -13,6 +13,8 @@ using DotnetCore.Api.Swagger;
 using DotnetCore.Data;
 using DotnetCore.Data.Example;
 using DotnetCore.Service.Example;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -44,7 +46,7 @@ namespace DotnetCore.Api
             services.AddControllers().AddJsonOptions(jsonOptions =>
             {
                 jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
-            });
+            }).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblies(new []{typeof(GetUserListRequest).Assembly}));;
             services.AddHttpContextAccessor();
             services.AddMemoryCache();
             services.AddLocalization();
@@ -134,6 +136,15 @@ namespace DotnetCore.Api
                 });
             });
 
+            AssemblyScanner.FindValidatorsInAssembly(typeof(GetUserIdDataRequest).Assembly)
+                .ForEach(result =>
+                    {
+                        Console.WriteLine("Here we are");
+                        //services.AddScoped(result.InterfaceType, result.ValidatorType);
+                        services.AddTransient(result.InterfaceType, result.ValidatorType);
+                    }
+                );
+            
             services.AddSingleton<ConnectionHelper>(new ConnectionHelper(_appSettings.ConnectionStrings.UserDB));
             services.AddMediatR(typeof(GetUserListRequest).Assembly);
             services.AddMediatR(typeof(GetUserIdDataRequest).Assembly);
