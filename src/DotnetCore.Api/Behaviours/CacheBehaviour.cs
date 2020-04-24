@@ -65,7 +65,7 @@ namespace DotnetCore.Api.Behaviours
             var value = await _distributedCache.GetAsync(cacheKey, cancellationToken);
             if (value != null)
             {
-                return JsonSerializer.Deserialize<TResponse>(value);
+                //return JsonSerializer.Deserialize<TResponse>(value);
             }
 
             var response = await next();

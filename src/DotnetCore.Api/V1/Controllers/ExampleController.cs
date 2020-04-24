@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Datadog.Trace;
 using DotnetCore.Data.Example;
 using DotnetCore.Service.Example;
 using MediatR;
@@ -21,7 +22,22 @@ namespace DotnetCore.Api.V1.Controllers
         [Route("users"), HttpGet]
         public async Task<IActionResult> GetUserList()
         {
+            // using(var scope = Tracer.Instance.StartActive("web.request"))
+            // {
+            //     var span = scope.Span;
+            //     span.Type = SpanTypes.Web;
+            //     span.ResourceName = "users";
+            //     span.SetTag(Tags.HttpMethod, "post");
+            //
+            //     // do some work...
+            // }
             var response = await _mediator.Send(new GetUserListRequest());
+            foreach (var item in response)
+            {
+                item.TraceId = Datadog.Trace.CorrelationIdentifier.TraceId;
+                item.SpanId = Datadog.Trace.CorrelationIdentifier.SpanId;
+            }
+
             return Ok(response);
         }
 
@@ -31,6 +47,7 @@ namespace DotnetCore.Api.V1.Controllers
             var response = await _mediator.Send(new GetUserIdServiceRequest());
             return Ok(response);
         }
+
         [Route("users-with-cache"), HttpGet]
         public async Task<IActionResult> GetUserWithCache()
         {

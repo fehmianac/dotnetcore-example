@@ -5,6 +5,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using CoreBase.API.Behaviours;
+using Datadog.Trace;
+using Datadog.Trace.Configuration;
 using DotnetCore.Api.Behaviours;
 using DotnetCore.Api.Config;
 using DotnetCore.Api.HealthCheck;
@@ -150,6 +152,23 @@ namespace DotnetCore.Api
             services.AddMediatR(typeof(GetUserIdDataRequest).Assembly);
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(CacheBehaviour<,>));
+            
+            var settings = TracerSettings.FromDefaultSources();
+
+// change some settings
+            settings.ServiceName = "k8s-test-api";
+// disable the AdoNet integration
+            settings.Integrations["AdoNet"].Enabled = true;
+            
+            settings.Environment = "test";
+            settings.AnalyticsEnabled = true;
+
+// create a new Tracer using these settings
+            var tracer = new Tracer(settings);
+
+// set the global tracer
+            Tracer.Instance = tracer;
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
